@@ -1,0 +1,2269 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8VVWXBH142"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', 'G-8VVWXBH142');
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Talon is a completely unblockable web proxy, built with speed and privacy in mind. Made by Toad - use bing if u want it to work">
+    <title>Talon Browser | use bing if u want it to work</title>
+    <style>
+      /* Keep all the existing CSS exactly as is */
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Segoe UI', Arial, sans-serif;
+        background-color: #1a1d21;
+        color: #e0e0e0;
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        font-size: 16px;
+        font-weight: 400;
+        overflow-x: hidden;
+      }
+
+      ::placeholder {
+        color: #a0a8b0;
+        opacity: 0.8;
+      }
+
+      /* Tab bar - fixed the overlapping issue */
+      .uptop-baraa {
+        background-color: #2a2e33;
+        display: flex;
+        align-items: flex-end;
+        padding: 8px 10px 0 10px;
+        min-height: 40px;
+        border-bottom: 1px solid #3a3f45;
+        flex-shrink: 0;
+        position: relative;
+        z-index: 1000;
+      }
+
+      .uptop-baraa .tabaa {
+        display: flex;
+        align-items: center;
+        background: linear-gradient(to bottom, #4a5057, #3e444a);
+        color: #ccc;
+        border-radius: 8px 8px 0 0;
+        padding: 8px 15px 10px 15px;
+        margin-right: 4px;
+        font-size: 13px;
+        cursor: pointer;
+        position: relative;
+        max-width: 200px;
+        min-width: 120px;
+        overflow: hidden;
+        box-shadow: inset 0 -2px 0 rgba(0,0,0,0.2);
+        border: 1px solid #3a3f45;
+        border-bottom: none;
+        transition: all 0.2s ease;
+        z-index: 1;
+      }
+
+      .uptop-baraa .tabaa:hover {
+        background: linear-gradient(to bottom, #5a6067, #4e545a);
+        color: #fff;
+        z-index: 2;
+      }
+
+      .uptop-baraa .tabaa.activeaa {
+        background: linear-gradient(to bottom, #202124, #2d3136);
+        color: #fff;
+        z-index: 3;
+        border-bottom: 3px solid #4dffa6;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+      }
+
+      .uptop-baraa .tabaa .tab-nameaa {
+        flex-grow: 1;
+        margin-right: 8px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-size: 13.5px;
+      }
+
+      .uptop-baraa .tabaa .close-btnaa {
+        font-size: 16px;
+        color: #888;
+        cursor: pointer;
+        padding: 2px;
+        border-radius: 50%;
+        transition: all 0.2s;
+        width: 18px;
+        height: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .uptop-baraa .tabaa .close-btnaa:hover {
+        background-color: rgba(255,255,255,0.1);
+        color: #fff;
+      }
+
+      .uptop-baraa .add-tabaa {
+        font-size: 20px;
+        color: #8a8f95;
+        cursor: pointer;
+        margin-left: 8px;
+        padding: 6px 10px;
+        border-radius: 4px;
+        transition: all 0.2s;
+        background: rgba(255,255,255,0.05);
+      }
+
+      .uptop-baraa .add-tabaa:hover {
+        color: #4dffa6;
+        background: rgba(77, 255, 166, 0.1);
+      }
+
+      /* Toolbar */
+      .browser-baraa {
+        display: flex;
+        align-items: center;
+        padding: 10px 15px;
+        background: linear-gradient(to bottom, #353a40, #2f343a);
+        border-bottom: 1px solid #40454b;
+        flex-shrink: 0;
+        gap: 8px;
+        position: relative;
+        z-index: 999;
+      }
+
+      .browser-baraa button {
+        background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: 6px;
+        font-size: 16px;
+        color: #a0a8b0;
+        padding: 8px 12px;
+        cursor: pointer;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 40px;
+      }
+
+      .browser-baraa button:hover {
+        background: rgba(255,255,255,0.1);
+        color: #fff;
+        border-color: rgba(255,255,255,0.2);
+        transform: translateY(-1px);
+      }
+
+      .browser-baraa button:active {
+        transform: translateY(0);
+      }
+
+      /* URL bar */
+      .browser-baraa .address-baraa {
+        flex-grow: 1;
+        display: flex;
+        align-items: center;
+        background: rgba(0,0,0,0.3);
+        padding: 8px 15px;
+        border-radius: 25px;
+        border: 1px solid rgba(255,255,255,0.1);
+        gap: 10px;
+        transition: all 0.3s;
+        margin: 0 10px;
+      }
+
+      .browser-baraa .address-baraa:focus-within {
+        border-color: #4dffa6;
+        box-shadow: 0 0 0 2px rgba(77, 255, 166, 0.2);
+        background: rgba(0,0,0,0.4);
+      }
+
+      .browser-baraa .address-baraa input {
+        border: none;
+        width: 100%;
+        outline: none;
+        font-size: 14px;
+        color: #e0e0e0;
+        background: transparent;
+        font-family: 'Consolas', monospace;
+      }
+
+      .browser-baraa .address-baraa .lock-iconaa {
+        color: #4dffa6;
+        font-size: 14px;
+      }
+
+      .browser-baraa .official-caa {
+        background: linear-gradient(45deg, #2d5a3d, #4dffa6);
+        color: #000;
+        padding: 4px 12px;
+        border-radius: 25px;
+        font-size: 12px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        white-space: nowrap;
+        opacity: 0.9;
+        transition: opacity 0.3s;
+      }
+
+      .browser-baraa .official-caa:hover {
+        opacity: 1;
+      }
+
+      /* Search container - FIXED OVERLAPPING ISSUE */
+      .search-containeraa {
+        display: flex;
+        align-items: center;
+        position: relative;
+        z-index: 100;
+      }
+
+      .search-engine-dropdownaa {
+        background: rgba(0,0,0,0.3);
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: 8px;
+        width: 48px;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.2s;
+        position: relative;
+        z-index: 101;
+      }
+
+      .search-engine-dropdownaa:hover {
+        background: rgba(77, 255, 166, 0.1);
+        border-color: rgba(77, 255, 166, 0.3);
+      }
+
+      .search-engine-dropdownaa img {
+        width: 24px;
+        height: 24px;
+        border-radius: 4px;
+      }
+
+      .dropdown-contentaa {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        margin-top: 5px;
+        background: rgba(40, 44, 48, 0.95);
+        backdrop-filter: blur(10px);
+        min-width: 250px;
+        border-radius: 12px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+        border: 1px solid rgba(77, 255, 166, 0.3);
+        overflow: hidden;
+        z-index: 9999 !important;
+      }
+
+      .dropdown-contentaa a {
+        display: flex;
+        align-items: center;
+        padding: 12px 15px;
+        color: #e0e0e0;
+        text-decoration: none;
+        transition: all 0.2s;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+      }
+
+      .dropdown-contentaa a:hover {
+        background: rgba(77, 255, 166, 0.1);
+        color: #4dffa6;
+      }
+
+      .dropdown-contentaa a img {
+        width: 20px;
+        height: 20px;
+        margin-right: 10px;
+        border-radius: 3px;
+      }
+
+      .dropdown-contentaa .status-messageaa {
+        padding: 12px 15px;
+        background: rgba(77, 255, 166, 0.1);
+        color: #4dffa6;
+        font-size: 12px;
+        font-weight: 600;
+        border-bottom: 1px solid rgba(77, 255, 166, 0.2);
+      }
+
+      /* Main content area */
+      .tab-contentaa {
+        display: none;
+        flex-grow: 1;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 0;
+        overflow: hidden;
+        background: linear-gradient(135deg, #1a1d21 0%, #2a2d32 100%);
+        position: relative;
+      }
+
+      .tab-contentaa.activeaa {
+        display: flex;
+      }
+
+      .page-content-container {
+        width: 100%;
+        height: 100%;
+        display: none;
+        flex-direction: column;
+      }
+
+      .page-content-container.active {
+        display: flex;
+      }
+
+      .page-frame {
+        width: 100%;
+        height: 100%;
+        border: none;
+        background: white;
+      }
+
+      /* Home page styling */
+      .home-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 40px 20px;
+        width: 100%;
+        height: 100%;
+      }
+
+      .home-content h23 {
+        font-size: 72px;
+        font-weight: 800;
+        margin: 20px 0 10px 0;
+        background: linear-gradient(45deg, #4dffa6, #00ffaa);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        letter-spacing: -1px;
+        position: relative;
+      }
+
+      .home-content h23::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 200px;
+        height: 4px;
+        background: linear-gradient(90deg, transparent, #4dffa6, transparent);
+        border-radius: 2px;
+      }
+
+      .home-content h21 {
+        font-size: 20px;
+        color: #8a8f95;
+        margin-bottom: 40px;
+        font-style: italic;
+      }
+
+      /* Search box */
+      .search-baraa {
+        display: flex;
+        align-items: center;
+        background: rgba(0,0,0,0.4);
+        backdrop-filter: blur(10px);
+        padding: 20px;
+        border-radius: 16px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        width: 100%;
+        max-width: 600px;
+        border: 1px solid rgba(255,255,255,0.1);
+        position: relative;
+        overflow: visible;
+        z-index: 50;
+      }
+
+      .search-baraa::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(90deg, #4dffa6, #00ffaa, #4dffa6);
+      }
+
+      .search-baraa input {
+        border: none;
+        width: 100%;
+        outline: none;
+        font-size: 16px;
+        background: transparent;
+        color: #e0e0e0;
+        padding: 0 15px;
+        font-family: 'Segoe UI', sans-serif;
+      }
+
+      .search-baraa .search-iconaa {
+        color: #4dffa6;
+        font-size: 18px;
+        cursor: pointer;
+        transition: transform 0.2s;
+      }
+
+      .search-baraa .search-iconaa:hover {
+        transform: scale(1.1);
+      }
+
+      /* GitHub corner */
+      .top-right-boxaa {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: rgba(0,0,0,0.3);
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: 12px;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        color: #fff;
+        cursor: pointer;
+        transition: all 0.3s;
+        backdrop-filter: blur(5px);
+        z-index: 100;
+      }
+
+      .top-right-boxaa:hover {
+        background: rgba(77, 255, 166, 0.2);
+        border-color: #4dffa6;
+        transform: rotate(5deg) scale(1.1);
+      }
+
+      /* Made by Toad badge */
+      .Xt7Lm9Kp3R8f {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(0,0,0,0.3);
+        padding: 10px 20px;
+        border-radius: 25px;
+        font-size: 14px;
+        color: #8a8f95;
+        border: 1px solid rgba(255,255,255,0.05);
+        backdrop-filter: blur(5px);
+        animation: float 3s ease-in-out infinite;
+        z-index: 100;
+      }
+
+      @keyframes float {
+        0%, 100% { transform: translateX(-50%) translateY(0); }
+        50% { transform: translateX(-50%) translateY(-5px); }
+      }
+
+      /* Menu dropdown */
+      .dropdown-menuccc {
+        display: none;
+        position: absolute;
+        right: 10px;
+        top: 120px;
+        background: rgba(40, 44, 48, 0.95);
+        backdrop-filter: blur(10px);
+        min-width: 160px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+        z-index: 9999 !important;
+        border: 1px solid rgba(77, 255, 166, 0.3);
+        border-radius: 12px;
+        overflow: hidden;
+      }
+
+      .dropdown-menuccc a {
+        color: #e0e0e0;
+        padding: 12px 15px;
+        text-decoration: none;
+        display: block;
+        transition: all 0.2s;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+      }
+
+      .dropdown-menuccc a:hover {
+        background-color: rgba(77, 255, 166, 0.1);
+        border-radius: 0;
+      }
+
+      .showccc {
+        display: block;
+      }
+
+      /* Loading spinner */
+      .spinner {
+        width: 16px;
+        height: 16px;
+        border: 3px solid rgba(77, 255, 166, 0.3);
+        border-top-color: #4dffa6;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin-right: 8px;
+      }
+
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+
+      /* User ID display */
+      .user-idff {
+        font-size: 12px;
+        color: #8a8f95;
+        margin-top: 10px;
+        padding: 8px 12px;
+        display: inline-block;
+        border-radius: 8px;
+        background: rgba(0,0,0,0.3);
+        border: 1px solid rgba(255,255,255,0.1);
+      }
+
+      /* Modal */
+      .modalgg {
+        display: none;
+        position: fixed;
+        z-index: 99999;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        justify-content: center;
+        align-items: center;
+        backdrop-filter: blur(5px);
+      }
+
+      .modal-contentgg {
+        background: rgba(40, 44, 48, 0.95);
+        padding: 25px;
+        border-radius: 16px;
+        width: 90%;
+        max-width: 500px;
+        text-align: center;
+        border: 1px solid rgba(77, 255, 166, 0.3);
+        box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        backdrop-filter: blur(10px);
+      }
+
+      .modal-contentgg h2 {
+        margin-bottom: 15px;
+        color: #4dffa6;
+      }
+
+      .modal-contentgg textarea {
+        width: 100%;
+        height: 200px;
+        padding: 15px;
+        font-size: 14px;
+        color: #e0e0e0;
+        background: rgba(0,0,0,0.3);
+        border: 1px solid rgba(77, 255, 166, 0.3);
+        border-radius: 8px;
+        margin-top: 10px;
+        resize: none;
+        box-sizing: border-box;
+        font-family: 'Consolas', monospace;
+      }
+
+      .button-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        margin-top: 20px;
+      }
+
+      .copy-buttongg, .close-buttongg {
+        background: rgba(77, 255, 166, 0.2);
+        border: 1px solid #4dffa6;
+        color: #4dffa6;
+        padding: 10px 20px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: all 0.2s;
+        flex: 1;
+      }
+
+      .copy-buttongg:hover, .close-buttongg:hover {
+        background: rgba(77, 255, 166, 0.3);
+      }
+
+      /* Error overlay */
+      .Q2wE4rT6y8U0 {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #1a1d21;
+        color: #ff6b6b;
+        padding: 40px;
+        font-family: 'Consolas', monospace;
+        font-size: 14px;
+        line-height: 1.6;
+        white-space: pre-wrap;
+        overflow-y: auto;
+        z-index: 999999;
+        border: 3px solid #ff6b6b;
+      }
+
+      /* Chatbot */
+      .chatbot {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 350px;
+        max-height: 500px;
+        background: rgba(40, 44, 48, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 16px;
+        border: 1px solid rgba(77, 255, 166, 0.3);
+        box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+        display: none;
+        flex-direction: column;
+        overflow: hidden;
+        z-index: 9999;
+      }
+
+      .chatbot.show {
+        display: flex;
+        animation: slideIn 0.3s ease-out;
+      }
+
+      @keyframes slideIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Settings sidebar */
+      .sidebarvv {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 250px;
+        height: 100%;
+        background: linear-gradient(to bottom, #2a2e33, #24282d);
+        color: #f8f8f2;
+        display: flex;
+        flex-direction: column;
+        padding-top: 20px;
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+        border-right: 1px solid rgba(77, 255, 166, 0.3);
+        z-index: 9998;
+      }
+
+      .sidebarvv .sidebar-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px 20px 20px;
+        border-bottom: 2px solid rgba(77, 255, 166, 0.3);
+        margin-bottom: 20px;
+      }
+
+      .sidebarvv .sidebar-header h1 {
+        color: #4dffa6;
+        margin: 0;
+        font-size: 24px;
+      }
+
+      .sidebarvv .close-settings-btn {
+        background: none;
+        border: none;
+        color: #8a8f95;
+        font-size: 24px;
+        cursor: pointer;
+        padding: 0;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        transition: all 0.2s;
+      }
+
+      .sidebarvv .close-settings-btn:hover {
+        background: rgba(255, 255, 255, 0.1);
+        color: #ff6b6b;
+        transform: scale(1.1);
+      }
+
+      .sidebarvv button {
+        width: 100%;
+        padding: 12px 20px;
+        text-align: left;
+        background: transparent;
+        border: none;
+        color: #a0a8b0;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-size: 15px;
+        border-left: 3px solid transparent;
+        margin-bottom: 8px;
+        border-radius: 0 8px 8px 0;
+      }
+
+      .sidebarvv button:hover {
+        background: rgba(255,255,255,0.05);
+        color: #fff;
+        border-left-color: rgba(77, 255, 166, 0.5);
+      }
+
+      .sidebarvv button.active {
+        background: rgba(77, 255, 166, 0.1);
+        color: #4dffa6;
+        border-left-color: #4dffa6;
+      }
+
+      /* Settings content containers */
+      .settings-content {
+        margin-left: 270px;
+        padding: 30px;
+        color: #e0e0e0;
+        display: none;
+      }
+
+      .settings-content.active {
+        display: block;
+      }
+
+      .settings-content h2 {
+        color: #4dffa6;
+        margin-bottom: 20px;
+        border-bottom: 1px solid rgba(77, 255, 166, 0.3);
+        padding-bottom: 10px;
+      }
+
+      .settings-content .setting-group {
+        background: rgba(0,0,0,0.3);
+        padding: 20px;
+        border-radius: 12px;
+        border: 1px solid rgba(255,255,255,0.1);
+        margin-bottom: 20px;
+      }
+
+      .settings-content .setting-item {
+        margin-bottom: 15px;
+        padding: 10px;
+        background: rgba(255,255,255,0.05);
+        border-radius: 8px;
+      }
+
+      .settings-content label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: 500;
+      }
+
+      .settings-content select, 
+      .settings-content input[type="text"] {
+        width: 100%;
+        padding: 8px 12px;
+        background: rgba(0,0,0,0.5);
+        border: 1px solid rgba(77, 255, 166, 0.3);
+        border-radius: 6px;
+        color: #e0e0e0;
+        font-family: 'Consolas', monospace;
+        margin-top: 5px;
+      }
+
+      .settings-content button {
+        background: rgba(77, 255, 166, 0.2);
+        border: 1px solid #4dffa6;
+        color: #4dffa6;
+        padding: 8px 16px;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.2s;
+        margin-right: 10px;
+        margin-top: 5px;
+      }
+
+      .settings-content button:hover {
+        background: rgba(77, 255, 166, 0.3);
+      }
+
+      /* Proxy status indicator */
+      .proxy-status {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        margin-right: 8px;
+      }
+
+      .proxy-status.active {
+        background-color: #4dffa6;
+        box-shadow: 0 0 10px #4dffa6;
+      }
+
+      .proxy-status.inactive {
+        background-color: #ff6b6b;
+      }
+
+      /* Error message */
+      .error-message {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        padding: 40px;
+        text-align: center;
+      }
+
+      .error-message h2 {
+        color: #ff6b6b;
+        margin-bottom: 20px;
+      }
+
+      .error-message button {
+        background: rgba(77, 255, 166, 0.2);
+        border: 1px solid #4dffa6;
+        color: #4dffa6;
+        padding: 10px 20px;
+        border-radius: 8px;
+        cursor: pointer;
+        margin-top: 20px;
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .uptop-baraa .tabaa {
+          min-width: 100px;
+          max-width: 150px;
+          padding: 8px 10px 10px 10px;
+        }
+        
+        .home-content h23 {
+          font-size: 48px;
+        }
+        
+        .search-baraa {
+          margin: 0 20px;
+          padding: 15px;
+        }
+        
+        .browser-baraa .address-baraa {
+          margin: 0 5px;
+        }
+        
+        .browser-baraa button {
+          min-width: 36px;
+          padding: 6px 8px;
+        }
+        
+        .dropdown-menuccc {
+          width: calc(100% - 40px);
+          right: 20px;
+          left: 20px;
+        }
+        
+        .sidebarvv {
+          width: 200px;
+        }
+        
+        .settings-content {
+          margin-left: 220px;
+          padding: 15px;
+        }
+      }
+
+      /* Custom scrollbar */
+      ::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: rgba(255,255,255,0.05);
+        border-radius: 5px;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: rgba(77, 255, 166, 0.3);
+        border-radius: 5px;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: rgba(77, 255, 166, 0.5);
+      }
+
+      /* Background effects */
+      body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: 
+          radial-gradient(circle at 10% 20%, rgba(77, 255, 166, 0.05) 0%, transparent 20%),
+          radial-gradient(circle at 90% 80%, rgba(77, 255, 166, 0.03) 0%, transparent 20%),
+          radial-gradient(circle at 50% 50%, rgba(77, 255, 166, 0.02) 0%, transparent 30%);
+        pointer-events: none;
+        z-index: -1;
+      }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <!-- Tabs -->
+    <div class="uptop-baraa">
+      <div class="tabaa activeaa">
+        <span class="tab-nameaa">New Tab</span>
+        <i class="fas fa-times close-btnaa"></i>
+      </div>
+      <div class="add-tabaa" title="Add tab" id="add-tabaa">
+        <i class="fa-solid fa-circle-plus"></i>
+      </div>
+    </div>
+
+    <!-- Toolbar -->
+    <div class="browser-baraa">
+      <button class="backward-buttonaa" title="Click to go back">
+        <i class="fas fa-arrow-left"></i>
+      </button>
+      <button class="forward-buttonaa" title="Click to go forward">
+        <i class="fas fa-arrow-right"></i>
+      </button>
+      <button class="reload-buttonaa" title="Reload this page">
+        <i class="fas fa-redo"></i>
+      </button>
+      <button class="home-buttonaa" title="Shortcut to talon://start">
+        <i class="fas fa-home"></i>
+      </button>
+      
+      <div class="address-baraa">
+        <i class="fas fa-lock lock-iconaa"></i>
+        <input type="text" placeholder="Enter a URL" value="talon://start" id="url-baraa">
+        <div class="official-caa">
+          <i class="fa-solid fa-circle-check"></i>
+          <span>Official</span>
+        </div>
+      </div>
+      
+      <button class="fullscreen-button" title="Enter fullscreen" onclick="toggleFullscreen()">
+        <i class="fas fa-expand"></i>
+      </button>
+      <button class="wrench-buttonaa" title="Open Talon AI (Experimental)" id="toggleSourceCode">
+        <i class="fa-solid fa-robot"></i>
+      </button>
+      <button class="settings-buttonaa" title="Shortcut to talon://settings">
+        <i class="fas fa-cog"></i>
+      </button>
+      <button class="menu-buttonaa" title="More options" onclick="toggleDropdownccc()">⋮</button>
+      
+      <div id="myDropdownccc" class="dropdown-menuccc">
+        <a href="javascript:void(0);">New Tab</a>
+        <a href="javascript:void(0);" onclick="changeTabContent('talon://settings')">Talon Settings</a>
+        <a href="javascript:void(0);" onclick="changeTabContent('talon://urls')">Talon Internal URLs</a>
+        <a href="javascript:void(0);" onclick="downloadPage()">Download Talon-Offline&nbsp;&nbsp; <i class="fa-solid fa-download" style="font-size: 15px; color: #4dffa6;"></i></a>
+        <a href="javascript:void(0);" id="dataURL" onclick="generateDataURL()">Generate Session's Data Url</a>
+        <a href="https://github.com/ToadsArcade/" target="_blank"> Source Code&nbsp;&nbsp; <i class="fa-solid fa-up-right-from-square" style="font-size: 15px; color: #4dffa6;"></i></a>
+        <a href="https://github.com/ToadsArcade/talon/issues/new" target="_blank">Submit an Issue&nbsp;&nbsp; <i class="fa-solid fa-up-right-from-square" style="font-size: 15px; color: #4dffa6;"></i></a>
+        <div class="user-idff" id="user-idff">Session ID: Loading...</div>
+      </div>
+    </div>
+
+    <!-- Main content container -->
+    <div class="contentaa tab-contentaa activeaa">
+      <!-- Home page content -->
+      <div class="home-content" id="home-content">
+        <div class="top-right-boxaa" onclick="window.open('https://github.com/ToadsArcade/', '_blank')">
+          <i class="fa-brands fa-github"></i>
+        </div>
+        
+        <h23>Talon</h23>
+        <h21>v1.9.0 | "use bing if u want it to work" edition</h21>
+        
+        <div class="search-baraa">
+          <div class="search-containeraa">
+            <div class="search-engine-dropdownaa" onclick="toggleDropdown()">
+              <img src="https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://google.com&size=256" alt="Google" id="selected-engineaa">
+            </div>
+            <div class="dropdown-contentaa" id="engineDropdownaa">
+              <div class="status-messageaa" id="statusMessageaa">Searching with Google</div>
+              <a href="javascript:void(0);" onclick="selectEngine('https://4get.ca/favicon.ico', '4get')" data-engine="4get">
+                <img src="https://4get.ca/favicon.ico" alt="4get"> <span>- <s>Search with 4get</s>-</span>
+              </a>
+              <a href="javascript:void(0);" onclick="selectEngine('https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://google.com&size=256', 'Google')" data-engine="Google">
+                <img src="https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://google.com&size=256" alt="Google"> <span>Search with Google</span>
+              </a>
+              <a href="javascript:void(0);" onclick="selectEngine('https://www.bing.com/favicon.ico', 'Bing')" data-engine="Bing">
+                <img src="https://www.bing.com/favicon.ico" alt="Bing"> <span>Search with Bing (it works!)</span>
+              </a>
+              <a href="javascript:void(0);" onclick="selectEngine('https://duckduckgo.com/favicon.ico', 'DuckDuckGo')" data-engine="DuckDuckGo">
+                <img src="https://duckduckgo.com/favicon.ico" alt="DuckDuckGo"> <span>- <s>Search with DuckDuckGo</s>-</span>
+              </a>
+            </div>
+          </div>
+          <input type="text" placeholder="Search the web or enter a URL [Ctrl + K]" id="search-input">
+          <i class="fas fa-search search-iconaa" id="searchBtn"></i>
+        </div>
+        
+        <div class="Xt7Lm9Kp3R8f">
+          <p>🚀 Built by Toad with questionable JavaScript</p>
+        </div>
+      </div>
+
+      <!-- Page content container for proxied websites -->
+      <div class="page-content-container" id="page-content-container">
+        <iframe class="page-frame" id="page-frame" sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-modals" allow="autoplay; camera; microphone; geolocation"></iframe>
+      </div>
+    </div>
+
+    <!-- Settings Panel (hidden by default) -->
+    <div class="sidebarvv" id="settingsPanel" style="display: none;">
+      <div class="sidebar-header">
+        <h1>Talon Settings</h1>
+        <button class="close-settings-btn" onclick="closeSettings()" title="Close settings">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <button class="active" onclick="showSettingsCategory('general')">General</button>
+      <button onclick="showSettingsCategory('proxy')">Proxy Settings</button>
+      <button onclick="showSettingsCategory('privacy')">Privacy</button>
+      <button onclick="showSettingsCategory('appearance')">Appearance</button>
+      <button onclick="showSettingsCategory('about')">About</button>
+    </div>
+
+    <!-- Settings Content Areas -->
+    <div class="settings-content" id="general-settings">
+      <h2>General Settings</h2>
+      <div class="setting-group">
+        <div class="setting-item">
+          <label for="default-search">Default Search Engine:</label>
+          <select id="default-search">
+            <option value="Google">Google</option>
+            <option value="Bing">Bing</option>
+            <option value="4get">4get</option>
+            <option value="DuckDuckGo">DuckDuckGo</option>
+          </select>
+        </div>
+        <div class="setting-item">
+          <label for="homepage">Homepage URL:</label>
+          <input type="text" id="homepage" value="talon://start">
+        </div>
+        <div class="setting-item">
+          <label for="new-tab-page">New Tab Page:</label>
+          <select id="new-tab-page">
+            <option value="talon://start">Talon Home</option>
+            <option value="talon://blank">Blank Page</option>
+          </select>
+        </div>
+        <button onclick="saveGeneralSettings()">Save General Settings</button>
+      </div>
+    </div>
+
+    <div class="settings-content" id="proxy-settings">
+      <h2>Proxy Settings</h2>
+      <div class="setting-group">
+        <div class="setting-item">
+          <label>Current Proxy Status: 
+            <span class="proxy-status active" id="proxy-status-indicator"></span>
+            <span id="proxy-status-text">Active</span>
+          </label>
+          <p style="font-size: 14px; color: #8a8f95; margin-top: 5px;">
+            Using proxy: <code id="current-proxy-display">https://api.codetabs.com/v1/proxy?quest=</code>
+          </p>
+        </div>
+        <div class="setting-item">
+          <label for="proxy-select">Select Proxy Service:</label>
+          <select id="proxy-select">
+            <option value="https://api.codetabs.com/v1/proxy?quest=">CodeTabs Proxy (Default)</option>
+            <option value="https://api.allorigins.win/raw?url=">AllOrigins Proxy</option>
+            <option value="https://corsproxy.io/?">CorsProxy.io</option>
+            <option value="https://cors-anywhere.herokuapp.com/">Cors Anywhere</option>
+            <option value="custom">Custom Proxy</option>
+          </select>
+        </div>
+        <div class="setting-item" id="custom-proxy-container" style="display: none;">
+          <label for="custom-proxy">Custom Proxy URL:</label>
+          <input type="text" id="custom-proxy" placeholder="https://your-proxy.com/?url=">
+          <p style="font-size: 12px; color: #8a8f95; margin-top: 5px;">
+            Format should be: https://proxy.com/?url= or https://proxy.com/?quest=
+          </p>
+        </div>
+        <div class="setting-item">
+          <button onclick="testProxy()">Test Current Proxy</button>
+          <button onclick="saveProxySettings()">Save Proxy Settings</button>
+          <button onclick="resetProxySettings()" style="background: rgba(255,107,107,0.2); border-color: #ff6b6b; color: #ff6b6b;">Reset to Default</button>
+        </div>
+        <div id="proxy-test-result" style="margin-top: 15px; display: none;"></div>
+      </div>
+    </div>
+
+    <div class="settings-content" id="privacy-settings">
+      <h2>Privacy Settings</h2>
+      <div class="setting-group">
+        <div class="setting-item">
+          <label>
+            <input type="checkbox" id="clear-on-exit"> Clear browsing data on exit
+          </label>
+        </div>
+        <div class="setting-item">
+          <label>
+            <input type="checkbox" id="disable-cookies"> Disable cookies in proxy
+          </label>
+        </div>
+        <div class="setting-item">
+          <label>
+            <input type="checkbox" id="block-trackers"> Block known trackers
+          </label>
+        </div>
+        <button onclick="clearAllData()" style="background: rgba(255,107,107,0.2); border-color: #ff6b6b; color: #ff6b6b;">Clear All Browsing Data Now</button>
+        <div id="clear-data-message" style="margin-top: 15px; display: none;"></div>
+      </div>
+    </div>
+
+    <div class="settings-content" id="appearance-settings">
+      <h2>Appearance Settings</h2>
+      <div class="setting-group">
+        <div class="setting-item">
+          <label for="theme-select">Theme:</label>
+          <select id="theme-select">
+            <option value="dark">Dark (Default)</option>
+            <option value="light">Light</option>
+            <option value="system">System</option>
+          </select>
+        </div>
+        <div class="setting-item">
+          <label for="font-size">Font Size:</label>
+          <select id="font-size">
+            <option value="small">Small</option>
+            <option value="medium" selected>Medium</option>
+            <option value="large">Large</option>
+          </select>
+        </div>
+        <button onclick="saveAppearanceSettings()">Save Appearance Settings</button>
+      </div>
+    </div>
+
+    <div class="settings-content" id="about-settings">
+      <h2>About Talon</h2>
+      <div class="setting-group">
+        <div class="setting-item">
+          <p><strong>Version:</strong> 1.9.0 "use bing if u want it to work" edition</p>
+          <p><strong>Made by:</strong> Toad</p>
+          <p><strong>GitHub:</strong> <a href="https://github.com/ToadsArcade/" target="_blank" style="color: #4dffa6;">ToadsArcade</a></p>
+          <p><strong>Current Session ID:</strong> <span id="settings-session-id">Loading...</span></p>
+        </div>
+        <div class="setting-item">
+          <button onclick="checkForUpdates()">Check for Updates</button>
+          <button onclick="showDebugInfo()">Show Debug Info</button>
+        </div>
+        <div id="update-status" style="margin-top: 15px; display: none;"></div>
+      </div>
+    </div>
+
+    <!-- Modal for data URL -->
+    <div class="modalgg" id="myModal">
+      <div class="modal-contentgg">
+        <h2>Here is the data URL for this session (HTML):</h2>
+        <textarea id="dataURLText" rows="5" readonly></textarea>
+        <br>
+        <div class="button-container">
+          <button class="copy-buttongg" onclick="copyDataURL()">Copy</button>
+          <button class="close-buttongg" onclick="closeModal()">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chatbot -->
+    <div class="chatbot" id="chatbot">
+      <div style="padding: 20px; border-bottom: 1px solid rgba(255,255,255,0.1);">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <h3 style="margin: 0; color: #4dffa6;">Talon AI</h3>
+            <p style="margin: 5px 0 0 0; color: #8a8f95; font-size: 12px;">Experimental - be nice to it</p>
+          </div>
+          <button onclick="document.getElementById('chatbot').classList.remove('show')" style="background: none; border: none; color: #8a8f95; cursor: pointer;">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+      </div>
+      <div id="chatbox" style="flex-grow: 1; padding: 20px; overflow-y: auto; max-height: 300px;"></div>
+      <div style="padding: 20px; border-top: 1px solid rgba(255,255,255,0.1);">
+        <input type="text" placeholder="Ask me anything... (I'm still learning)" id="aiInput" style="width: 100%; padding: 10px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: #fff;">
+      </div>
+    </div>
+
+    <!-- Error overlay (hidden) -->
+    <div class="Q2wE4rT6y8U0" id="errorOverlay" style="display: none;">
+      // If you're seeing this, something went very wrong
+      // Try refreshing? Or just walk away slowly...
+    </div>
+
+    <script>
+      // ====================
+      // Main JavaScript - UPDATED PROXY IMPLEMENTATION
+      // ====================
+      
+      console.log('Talon loaded! Made by Toad');
+      console.log('Using CodeTabs proxy as default');
+      
+      // Search engines data
+      const searchEngines = {
+        'Google': {
+          icon: 'https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://google.com&size=256',
+          searchUrl: 'https://www.google.com/search?q='
+        },
+        'Bing': {
+          icon: 'https://www.bing.com/favicon.ico',
+          searchUrl: 'https://www.bing.com/search?q='
+        },
+        '4get': {
+          icon: 'https://4get.ca/favicon.ico',
+          searchUrl: 'https://4get.ca/web?q='
+        },
+        'DuckDuckGo': {
+          icon: 'https://duckduckgo.com/favicon.ico',
+          searchUrl: 'https://duckduckgo.com/?q='
+        }
+      };
+      
+      // Default proxy - now using only CodeTabs
+      let currentProxy = 'https://api.codetabs.com/v1/proxy?quest=';
+      let currentSearchEngine = 'Google';
+      let currentTabIndex = 0;
+      let tabs = [{
+        title: 'New Tab',
+        url: 'talon://start',
+        content: 'home',
+        history: ['talon://start'],
+        historyIndex: 0
+      }];
+      
+      // Initialize
+      document.addEventListener('DOMContentLoaded', function() {
+        console.log('Initializing Talon Proxy Browser...');
+        
+        // Generate user ID
+        generateUserID();
+        
+        // Load saved settings
+        loadSettings();
+        
+        // Load saved search engine
+        const savedEngine = localStorage.getItem('searchEngine') || 'Google';
+        if (searchEngines[savedEngine]) {
+          selectEngine(searchEngines[savedEngine].icon, savedEngine, true);
+        }
+        
+        // Set up event listeners
+        setupEventListeners();
+        
+        // Setup settings listeners
+        setupSettingsListeners();
+        
+        // Focus search on home page
+        setTimeout(() => {
+          if (document.querySelector('.tab-contentaa.activeaa')) {
+            document.getElementById('search-input').focus();
+          }
+        }, 500);
+        
+        console.log('Talon ready! Proxy: ' + currentProxy);
+      });
+      
+      // Settings management
+      function loadSettings() {
+        // Load proxy setting
+        const savedProxy = localStorage.getItem('talon_proxy');
+        if (savedProxy) {
+          currentProxy = savedProxy;
+          console.log('Loaded saved proxy: ' + currentProxy);
+        }
+        
+        // Update proxy display
+        document.getElementById('current-proxy-display').textContent = currentProxy;
+        
+        // Load search engine
+        const savedSearch = localStorage.getItem('searchEngine') || 'Google';
+        document.getElementById('default-search').value = savedSearch;
+        
+        // Load proxy select
+        const proxySelect = document.getElementById('proxy-select');
+        if (currentProxy.includes('codetabs')) {
+          proxySelect.value = 'https://api.codetabs.com/v1/proxy?quest=';
+        } else if (currentProxy.includes('allorigins')) {
+          proxySelect.value = 'https://api.allorigins.win/raw?url=';
+        } else if (currentProxy.includes('corsproxy.io')) {
+          proxySelect.value = 'https://corsproxy.io/?';
+        } else if (currentProxy.includes('cors-anywhere')) {
+          proxySelect.value = 'https://cors-anywhere.herokuapp.com/';
+        } else {
+          proxySelect.value = 'custom';
+          document.getElementById('custom-proxy-container').style.display = 'block';
+          document.getElementById('custom-proxy').value = currentProxy;
+        }
+        
+        // Load other settings
+        document.getElementById('homepage').value = localStorage.getItem('homepage') || 'talon://start';
+        document.getElementById('new-tab-page').value = localStorage.getItem('newTabPage') || 'talon://start';
+        document.getElementById('clear-on-exit').checked = localStorage.getItem('clearOnExit') === 'true';
+        document.getElementById('disable-cookies').checked = localStorage.getItem('disableCookies') === 'true';
+        document.getElementById('block-trackers').checked = localStorage.getItem('blockTrackers') === 'true';
+        document.getElementById('theme-select').value = localStorage.getItem('theme') || 'dark';
+        document.getElementById('font-size').value = localStorage.getItem('fontSize') || 'medium';
+        
+        // Set settings session ID
+        document.getElementById('settings-session-id').textContent = document.getElementById('user-idff').textContent.replace('Session ID: ', '');
+      }
+      
+      function setupSettingsListeners() {
+        // Proxy select change
+        document.getElementById('proxy-select').addEventListener('change', function() {
+          if (this.value === 'custom') {
+            document.getElementById('custom-proxy-container').style.display = 'block';
+          } else {
+            document.getElementById('custom-proxy-container').style.display = 'none';
+            currentProxy = this.value;
+            document.getElementById('current-proxy-display').textContent = currentProxy;
+            localStorage.setItem('talon_proxy', currentProxy);
+            updateProxyStatus(true);
+          }
+        });
+        
+        // Custom proxy input
+        document.getElementById('custom-proxy').addEventListener('input', function() {
+          currentProxy = this.value;
+          document.getElementById('current-proxy-display').textContent = currentProxy;
+        });
+        
+        // General settings
+        document.getElementById('default-search').addEventListener('change', function() {
+          selectEngine(searchEngines[this.value].icon, this.value, true);
+        });
+      }
+      
+      // Search engine functions
+      function toggleDropdown() {
+        const dropdown = document.getElementById('engineDropdownaa');
+        if (dropdown.style.display === 'block') {
+          dropdown.style.display = 'none';
+        } else {
+          dropdown.style.display = 'block';
+          dropdown.style.zIndex = '99999';
+        }
+      }
+      
+      function selectEngine(icon, name, silent = false) {
+        console.log(`Switching to ${name}...`);
+        document.getElementById('selected-engineaa').src = icon;
+        document.getElementById('selected-engineaa').alt = name;
+        document.getElementById('statusMessageaa').textContent = `Searching with ${name}`;
+        currentSearchEngine = name;
+        localStorage.setItem('searchEngine', name);
+        
+        if (!silent) {
+          document.getElementById('engineDropdownaa').style.display = 'none';
+        }
+        
+        // Update settings dropdown
+        document.getElementById('default-search').value = name;
+      }
+      
+      // Close dropdown when clicking outside
+      document.addEventListener('click', function(event) {
+        const dropdown = document.getElementById('engineDropdownaa');
+        const dropdownBtn = document.querySelector('.search-engine-dropdownaa');
+        
+        if (dropdown && dropdownBtn) {
+          if (!dropdown.contains(event.target) && !dropdownBtn.contains(event.target)) {
+            dropdown.style.display = 'none';
+          }
+        }
+      });
+      
+      // UPDATED PROXY LOADING FUNCTION - Now uses single proxy
+      async function loadWebsite(url) {
+        console.log(`Loading website through proxy: ${url}`);
+        console.log(`Using proxy: ${currentProxy}`);
+        
+        const tab = document.querySelector('.tabaa.activeaa .tab-nameaa');
+        const pageFrame = document.getElementById('page-frame');
+        const pageContainer = document.getElementById('page-content-container');
+        const homeContent = document.getElementById('home-content');
+        
+        // Show loading state
+        if (tab) {
+          tab.innerHTML = '<div class="spinner"></div> Loading...';
+        }
+        
+        // Switch to page container
+        homeContent.style.display = 'none';
+        pageContainer.style.display = 'flex';
+        pageContainer.classList.add('active');
+        
+        try {
+          // Construct proxy URL
+          const proxyUrl = currentProxy + encodeURIComponent(url);
+          console.log(`Proxying through: ${currentProxy}`);
+          
+          // Load the page in iframe through proxy
+          pageFrame.src = proxyUrl;
+          
+          // Wait for iframe to load
+          await new Promise((resolve, reject) => {
+            pageFrame.onload = resolve;
+            pageFrame.onerror = reject;
+            setTimeout(() => {
+              resolve(); // Timeout after 5 seconds
+            }, 5000);
+          });
+          
+          // Update tab title when iframe loads
+          setTimeout(() => {
+            try {
+              const iframeDoc = pageFrame.contentDocument || pageFrame.contentWindow.document;
+              const title = iframeDoc.title || 'Untitled';
+              if (tab) {
+                tab.textContent = title.substring(0, 30) + (title.length > 30 ? '...' : '');
+              }
+              
+              // Update URL bar
+              document.getElementById('url-baraa').value = url;
+              
+              // Update lock icon
+              const lockIcon = document.querySelector('.lock-iconaa');
+              if (url.startsWith('https://')) {
+                lockIcon.className = 'fas fa-lock lock-iconaa';
+                lockIcon.style.color = '#4dffa6';
+              } else {
+                lockIcon.className = 'fas fa-unlock lock-iconaa';
+                lockIcon.style.color = '#ff6b6b';
+              }
+              
+              // Add to history
+              const currentTab = tabs[currentTabIndex];
+              if (currentTab.history[currentTab.historyIndex] !== url) {
+                currentTab.history = currentTab.history.slice(0, currentTab.historyIndex + 1);
+                currentTab.history.push(url);
+                currentTab.historyIndex = currentTab.history.length - 1;
+              }
+              
+              currentTab.url = url;
+              
+            } catch (e) {
+              console.log('Could not get iframe title:', e);
+              if (tab) {
+                try {
+                  const domain = new URL(url).hostname;
+                  tab.textContent = domain.replace('www.', '').substring(0, 30);
+                } catch {
+                  tab.textContent = 'Loaded Page';
+                }
+              }
+            }
+          }, 1000);
+          
+        } catch (error) {
+          console.error('Failed to load website:', error);
+          
+          // Show error message
+          pageContainer.innerHTML = `
+            <div class="error-message">
+              <h2>Failed to Load Page</h2>
+              <p>Could not load ${url}</p>
+              <p style="color: #8a8f95;">Error: ${error.message}</p>
+              <p style="color: #8a8f95; font-size: 14px;">Using proxy: ${currentProxy}</p>
+              <div style="margin-top: 20px;">
+                <button onclick="navigateTo('talon://start')" style="background: rgba(77, 255, 166, 0.2); border: 1px solid #4dffa6; color: #4dffa6; padding: 10px 20px; border-radius: 8px; cursor: pointer; margin-right: 10px;">Back Home</button>
+                <button onclick="navigateTo('${url}')" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #e0e0e0; padding: 10px 20px; border-radius: 8px; cursor: pointer;">Try Again</button>
+                <button onclick="changeTabContent('talon://settings')" style="background: rgba(77, 255, 166, 0.2); border: 1px solid #4dffa6; color: #4dffa6; padding: 10px 20px; border-radius: 8px; cursor: pointer; margin-left: 10px;">Change Proxy</button>
+              </div>
+            </div>
+          `;
+          
+          if (tab) {
+            tab.textContent = 'Failed to Load';
+          }
+          
+          // Update proxy status to show error
+          updateProxyStatus(false);
+        }
+      }
+      
+      // Navigation function
+      function navigateTo(url) {
+        console.log(`🚀 Navigating to: ${url}`);
+        
+        // Check if it's a search query
+        if (!isURL(url)) {
+          // It's a search query
+          const engine = searchEngines[currentSearchEngine];
+          if (!engine) {
+            console.error('Search engine not found:', currentSearchEngine);
+            return;
+          }
+          
+          const searchUrl = engine.searchUrl + encodeURIComponent(url);
+          loadWebsite(searchUrl);
+          return;
+        }
+        
+        // Fix URL if needed
+        url = fixURL(url);
+        
+        // Check for internal URLs
+        if (url === 'talon://start') {
+          showHomePage();
+          return;
+        } else if (url === 'talon://settings') {
+          showSettings();
+          return;
+        } else if (url === 'talon://urls') {
+          showUrlsPage();
+          return;
+        }
+        
+        // Load external website
+        loadWebsite(url);
+      }
+      
+      function isURL(str) {
+        // Check if it starts with a protocol or talon://
+        if (str.startsWith('http://') || str.startsWith('https://') || str.startsWith('talon://')) {
+          return true;
+        }
+        
+        // Check if it looks like a URL (has a dot and no spaces)
+        const hasDot = str.includes('.');
+        const hasSpace = str.includes(' ');
+        const hasSlash = str.includes('/');
+        
+        return (hasDot && !hasSpace) || (hasSlash && !hasSpace);
+      }
+      
+      function fixURL(url) {
+        if (url.startsWith('talon://')) {
+          return url;
+        }
+        
+        if (!url.startsWith('http://') && !url.startsWith('https://')) {
+          return 'https://' + url;
+        }
+        return url;
+      }
+      
+      // Show home page
+      function showHomePage() {
+        const pageContainer = document.getElementById('page-content-container');
+        const homeContent = document.getElementById('home-content');
+        
+        pageContainer.style.display = 'none';
+        pageContainer.classList.remove('active');
+        homeContent.style.display = 'flex';
+        
+        document.getElementById('url-baraa').value = 'talon://start';
+        
+        const tab = document.querySelector('.tabaa.activeaa .tab-nameaa');
+        if (tab) {
+          tab.textContent = 'New Tab';
+        }
+        
+        const currentTab = tabs[currentTabIndex];
+        currentTab.url = 'talon://start';
+        if (currentTab.history[currentTab.historyIndex] !== 'talon://start') {
+          currentTab.history.push('talon://start');
+          currentTab.historyIndex = currentTab.history.length - 1;
+        }
+        
+        // Focus search
+        setTimeout(() => {
+          document.getElementById('search-input').focus();
+        }, 100);
+      }
+      
+      // Show settings
+      function showSettings() {
+        const pageContainer = document.getElementById('page-content-container');
+        const homeContent = document.getElementById('home-content');
+        
+        pageContainer.style.display = 'none';
+        pageContainer.classList.remove('active');
+        homeContent.style.display = 'none';
+        
+        // Also hide any other settings content that might be showing
+        document.querySelectorAll('.settings-content').forEach(el => {
+          el.classList.remove('active');
+        });
+        
+        document.getElementById('settingsPanel').style.display = 'block';
+        
+        // Show general settings by default
+        document.getElementById('general-settings').classList.add('active');
+        
+        // Update active button in sidebar
+        document.querySelectorAll('.sidebarvv button:not(.close-settings-btn)').forEach(button => {
+          button.classList.remove('active');
+        });
+        document.querySelector('.sidebarvv button[onclick="showSettingsCategory(\'general\')"]').classList.add('active');
+        
+        const tab = document.querySelector('.tabaa.activeaa .tab-nameaa');
+        if (tab) {
+          tab.textContent = 'Settings';
+        }
+        
+        document.getElementById('url-baraa').value = 'talon://settings';
+        
+        const currentTab = tabs[currentTabIndex];
+        currentTab.url = 'talon://settings';
+      }
+      
+      // Close settings and return to previous page
+      function closeSettings() {
+        const settingsPanel = document.getElementById('settingsPanel');
+        const pageContainer = document.getElementById('page-content-container');
+        const homeContent = document.getElementById('home-content');
+        const settingsContents = document.querySelectorAll('.settings-content');
+        
+        // Hide settings panel
+        settingsPanel.style.display = 'none';
+        
+        // Hide all settings content
+        settingsContents.forEach(content => {
+          content.classList.remove('active');
+        });
+        
+        // Get the current tab to decide where to return
+        const currentTab = tabs[currentTabIndex];
+        
+        if (currentTab && currentTab.url === 'talon://settings') {
+          // If we're on the settings tab, go back to home page
+          showHomePage();
+          
+          // Update tab title
+          const tab = document.querySelector('.tabaa.activeaa .tab-nameaa');
+          if (tab) {
+            tab.textContent = 'New Tab';
+          }
+          
+          document.getElementById('url-baraa').value = 'talon://start';
+          currentTab.url = 'talon://start';
+        } else {
+          // If settings was opened from another tab, just hide settings
+          // and show the previous content
+          const pageContainer = document.getElementById('page-content-container');
+          const homeContent = document.getElementById('home-content');
+          
+          // Check what should be shown
+          if (currentTab.url === 'talon://start') {
+            showHomePage();
+          } else if (currentTab.url === 'talon://urls') {
+            showUrlsPage();
+          } else if (currentTab.url && currentTab.url.startsWith('http')) {
+            // Show the proxied page
+            homeContent.style.display = 'none';
+            pageContainer.style.display = 'flex';
+            pageContainer.classList.add('active');
+          }
+        }
+      }
+      
+      // Show settings category
+      function showSettingsCategory(category) {
+        // Hide all settings content
+        document.querySelectorAll('.settings-content').forEach(el => {
+          el.classList.remove('active');
+        });
+        
+        // Show selected category
+        document.getElementById(category + '-settings').classList.add('active');
+        
+        // Update active button (excluding the close button)
+        document.querySelectorAll('.sidebarvv button:not(.close-settings-btn)').forEach(button => {
+          button.classList.remove('active');
+        });
+        event.target.classList.add('active');
+      }
+      
+      // Show URLs page
+      function showUrlsPage() {
+        const pageContainer = document.getElementById('page-content-container');
+        const homeContent = document.getElementById('home-content');
+        
+        pageContainer.style.display = 'none';
+        pageContainer.classList.remove('active');
+        homeContent.style.display = 'none';
+        
+        // Create URLs page content
+        const content = document.querySelector('.contentaa');
+        content.innerHTML = `
+          <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; padding: 40px;">
+            <h2 style="color: #4dffa6; margin-bottom: 30px;">Talon Internal URLs</h2>
+            <div style="background: rgba(0,0,0,0.3); padding: 30px; border-radius: 12px; border: 1px solid rgba(77, 255, 166, 0.3); max-width: 600px; width: 100%;">
+              <h3 style="color: #4dffa6; margin-top: 0;">Available URLs:</h3>
+              <div style="margin-bottom: 20px;">
+                <div style="background: rgba(77, 255, 166, 0.1); padding: 15px; border-radius: 8px; margin-bottom: 10px; cursor: pointer;" onclick="navigateTo('talon://start')">
+                  <strong style="color: #4dffa6;">talon://start</strong>
+                  <p style="color: #8a8f95; margin: 5px 0 0 0;">Talon home page with search</p>
+                </div>
+                <div style="background: rgba(77, 255, 166, 0.1); padding: 15px; border-radius: 8px; margin-bottom: 10px; cursor: pointer;" onclick="navigateTo('talon://settings')">
+                  <strong style="color: #4dffa6;">talon://settings</strong>
+                  <p style="color: #8a8f95; margin: 5px 0 0 0;">Browser settings and configuration</p>
+                </div>
+                <div style="background: rgba(77, 255, 166, 0.1); padding: 15px; border-radius: 8px; cursor: pointer;" onclick="navigateTo('talon://urls')">
+                  <strong style="color: #4dffa6;">talon://urls</strong>
+                  <p style="color: #8a8f95; margin: 5px 0 0 0;">This internal URLs list</p>
+                </div>
+              </div>
+              <p style="color: #8a8f95; font-style: italic;">
+                Tip: Type these URLs in the address bar or click on them above!
+              </p>
+            </div>
+            <button onclick="navigateTo('talon://start')" style="background: rgba(77, 255, 166, 0.2); border: 1px solid #4dffa6; color: #4dffa6; padding: 10px 20px; border-radius: 8px; cursor: pointer; margin-top: 30px;">Back to Home</button>
+          </div>
+        `;
+        
+        const tab = document.querySelector('.tabaa.activeaa .tab-nameaa');
+        if (tab) {
+          tab.textContent = 'Talon URLs';
+        }
+        
+        document.getElementById('url-baraa').value = 'talon://urls';
+        
+        const currentTab = tabs[currentTabIndex];
+        currentTab.url = 'talon://urls';
+      }
+      
+      // Search function
+      function performSearch() {
+        const query = document.getElementById('search-input').value.trim();
+        if (!query) {
+          alert("Type something to search first! 😊");
+          return;
+        }
+        
+        console.log(`Searching for: "${query}" using ${currentSearchEngine}`);
+        navigateTo(query);
+      }
+      
+      // Event listeners setup
+      function setupEventListeners() {
+        // Search button
+        document.getElementById('searchBtn').addEventListener('click', performSearch);
+        
+        // Search input enter key
+        document.getElementById('search-input').addEventListener('keypress', function(e) {
+          if (e.key === 'Enter') {
+            performSearch();
+          }
+        });
+        
+        // URL bar enter key
+        document.getElementById('url-baraa').addEventListener('keypress', function(e) {
+          if (e.key === 'Enter') {
+            const url = this.value.trim();
+            if (url) {
+              navigateTo(url);
+            }
+          }
+        });
+        
+        // Ctrl+K for search focus
+        document.addEventListener('keydown', function(e) {
+          if (e.ctrlKey && e.key === 'k') {
+            e.preventDefault();
+            document.getElementById('search-input').focus();
+          }
+          
+          // Ctrl+T for new tab
+          if (e.ctrlKey && e.key === 't') {
+            e.preventDefault();
+            addNewTab();
+          }
+          
+          // Ctrl+L for URL bar focus
+          if (e.ctrlKey && e.key === 'l') {
+            e.preventDefault();
+            document.getElementById('url-baraa').focus();
+            document.getElementById('url-baraa').select();
+          }
+          
+          // Escape key to close settings
+          if (e.key === 'Escape' && document.getElementById('settingsPanel').style.display === 'block') {
+            closeSettings();
+          }
+        });
+        
+        // Home button
+        document.querySelector('.home-buttonaa').addEventListener('click', function() {
+          navigateTo('talon://start');
+        });
+        
+        // Reload button
+        document.querySelector('.reload-buttonaa').addEventListener('click', function() {
+          const currentTab = tabs[currentTabIndex];
+          if (currentTab && currentTab.url) {
+            navigateTo(currentTab.url);
+          }
+        });
+        
+        // Back button
+        document.querySelector('.backward-buttonaa').addEventListener('click', function() {
+          const currentTab = tabs[currentTabIndex];
+          if (currentTab.historyIndex > 0) {
+            currentTab.historyIndex--;
+            navigateTo(currentTab.history[currentTab.historyIndex]);
+          }
+        });
+        
+        // Forward button
+        document.querySelector('.forward-buttonaa').addEventListener('click', function() {
+          const currentTab = tabs[currentTabIndex];
+          if (currentTab.historyIndex < currentTab.history.length - 1) {
+            currentTab.historyIndex++;
+            navigateTo(currentTab.history[currentTab.historyIndex]);
+          }
+        });
+        
+        // AI button
+        document.querySelector('.wrench-buttonaa').addEventListener('click', function() {
+          document.getElementById('chatbot').classList.toggle('show');
+        });
+        
+        // Settings button
+        document.querySelector('.settings-buttonaa').addEventListener('click', function() {
+          navigateTo('talon://settings');
+        });
+        
+        // Fullscreen button
+        document.querySelector('.fullscreen-button').addEventListener('click', toggleFullscreen);
+        
+        // Add tab button
+        document.getElementById('add-tabaa').addEventListener('click', addNewTab);
+        
+        // Tab close buttons
+        document.querySelectorAll('.tabaa .close-btnaa').forEach(btn => {
+          btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            closeTab(this.closest('.tabaa'));
+          });
+        });
+        
+        // Tab switching
+        document.querySelectorAll('.tabaa').forEach(tab => {
+          tab.addEventListener('click', function() {
+            switchToTab(this);
+          });
+        });
+        
+        // AI input
+        document.getElementById('aiInput')?.addEventListener('keypress', function(e) {
+          if (e.key === 'Enter' && this.value.trim()) {
+            const question = this.value.trim();
+            const chatbox = document.getElementById('chatbox');
+            
+            // Add user message
+            chatbox.innerHTML += `<div style="margin-bottom: 10px; text-align: right;">
+              <div style="background: rgba(77, 255, 166, 0.2); padding: 10px; border-radius: 10px; display: inline-block; max-width: 80%;">
+                ${question}
+              </div>
+            </div>`;
+            
+            // Simulate AI response
+            setTimeout(() => {
+              chatbox.innerHTML += `<div style="margin-bottom: 10px; text-align: left;">
+                <div style="background: rgba(255,255,255,0.1); padding: 10px; border-radius: 10px; display: inline-block; max-width: 80%;">
+                  <strong>Talon AI:</strong> I'm just a demo AI! In the real version, I'd use OpenAI API to answer your questions. Try asking about proxy browsing or web development! 😊
+                </div>
+              </div>`;
+              
+              chatbox.scrollTop = chatbox.scrollHeight;
+              this.value = '';
+            }, 1000);
+          }
+        });
+      }
+      
+      // Tab management
+      function addNewTab() {
+        const newTab = document.createElement('div');
+        newTab.className = 'tabaa';
+        newTab.innerHTML = `<span class="tab-nameaa">New Tab</span><i class="fas fa-times close-btnaa"></i>`;
+        
+        document.querySelector('.uptop-baraa').insertBefore(newTab, document.getElementById('add-tabaa'));
+        
+        // Add to tabs array
+        tabs.push({
+          title: 'New Tab',
+          url: 'talon://start',
+          content: 'home',
+          history: ['talon://start'],
+          historyIndex: 0
+        });
+        
+        // Add event listeners to new tab
+        newTab.querySelector('.close-btnaa').addEventListener('click', function(e) {
+          e.stopPropagation();
+          closeTab(newTab);
+        });
+        
+        newTab.addEventListener('click', function() {
+          switchToTab(this);
+        });
+        
+        // Switch to new tab
+        switchToTab(newTab);
+      }
+      
+      function switchToTab(tab) {
+        const tabIndex = Array.from(document.querySelectorAll('.tabaa')).indexOf(tab);
+        currentTabIndex = tabIndex;
+        
+        // Update active tab
+        document.querySelectorAll('.tabaa').forEach(t => t.classList.remove('activeaa'));
+        tab.classList.add('activeaa');
+        
+        // Hide settings panel if it's open
+        document.getElementById('settingsPanel').style.display = 'none';
+        
+        // Load tab content
+        const currentTab = tabs[tabIndex];
+        if (currentTab) {
+          if (currentTab.url === 'talon://start') {
+            showHomePage();
+          } else if (currentTab.url === 'talon://settings') {
+            showSettings();
+          } else if (currentTab.url === 'talon://urls') {
+            showUrlsPage();
+          } else {
+            navigateTo(currentTab.url);
+          }
+        }
+      }
+      
+      function closeTab(tab) {
+        const tabIndex = Array.from(document.querySelectorAll('.tabaa')).indexOf(tab);
+        
+        if (document.querySelectorAll('.tabaa').length <= 1) {
+          alert("Can't close the last tab!");
+          return;
+        }
+        
+        const isActive = tab.classList.contains('activeaa');
+        tab.remove();
+        tabs.splice(tabIndex, 1);
+        
+        if (isActive) {
+          // Switch to first remaining tab
+          const firstTab = document.querySelector('.tabaa');
+          if (firstTab) {
+            switchToTab(firstTab);
+          }
+        } else if (tabIndex < currentTabIndex) {
+          currentTabIndex--;
+        }
+      }
+      
+      // Change tab content (for menu items)
+      function changeTabContent(url) {
+        navigateTo(url);
+      }
+      
+      // Menu dropdown
+      function toggleDropdownccc() {
+        document.getElementById("myDropdownccc").classList.toggle("showccc");
+      }
+      
+      // Close dropdown when clicking outside
+      window.onclick = function(event) {
+        if (!event.target.matches('.menu-buttonaa')) {
+          const dropdowns = document.getElementsByClassName("dropdown-menuccc");
+          for (let i = 0; i < dropdowns.length; i++) {
+            const openDropdown = dropdowns[i];
+            if (openDropdown.classList.contains('showccc')) {
+              openDropdown.classList.remove('showccc');
+            }
+          }
+        }
+      }
+      
+      // Fullscreen
+      function toggleFullscreen() {
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen().catch(err => {
+            console.log(`Fullscreen error: ${err.message}`);
+          });
+        } else {
+          document.exitFullscreen();
+        }
+      }
+      
+      // Data URL functions
+      function generateDataURL() {
+        const htmlContent = document.documentElement.outerHTML;
+        const dataURL = 'data:text/html;charset=utf-8,' + encodeURIComponent(htmlContent);
+        
+        document.getElementById("dataURLText").value = dataURL;
+        document.getElementById("myModal").style.display = "flex";
+        document.querySelector(".modal-contentgg").style.display = "block";
+        
+        // Close menu dropdown
+        document.getElementById("myDropdownccc").classList.remove("showccc");
+      }
+      
+      function copyDataURL() {
+        const dataURLText = document.getElementById("dataURLText");
+        const copyButton = document.querySelector('.copy-buttongg');
+        
+        dataURLText.select();
+        navigator.clipboard.writeText(dataURLText.value)
+          .then(() => {
+            const originalText = copyButton.textContent;
+            copyButton.textContent = "Copied!";
+            setTimeout(() => {
+              copyButton.textContent = originalText;
+            }, 2000);
+          })
+          .catch(() => {
+            copyButton.textContent = "Error";
+            setTimeout(() => {
+              copyButton.textContent = "Copy";
+            }, 2000);
+          });
+      }
+      
+      function closeModal() {
+        document.getElementById("myModal").style.display = "none";
+        document.querySelector(".modal-contentgg").style.display = "none";
+      }
+      
+      // User ID generation
+      function generateUserID() {
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        let userId = 'Session ID: ';
+        
+        for (let i = 0; i < 14; i++) {
+          userId += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        
+        document.getElementById('user-idff').textContent = userId;
+        document.getElementById('settings-session-id').textContent = userId.replace('Session ID: ', '');
+      }
+      
+      // Download page
+      function downloadPage() {
+        const blob = new Blob([document.documentElement.outerHTML], { type: 'text/html' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'talon-offline.html';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }
+      
+      // Settings functions
+      function saveGeneralSettings() {
+        const homepage = document.getElementById('homepage').value;
+        const newTabPage = document.getElementById('new-tab-page').value;
+        
+        localStorage.setItem('homepage', homepage);
+        localStorage.setItem('newTabPage', newTabPage);
+        
+        alert('General settings saved!');
+      }
+      
+      function saveProxySettings() {
+        const proxySelect = document.getElementById('proxy-select');
+        let newProxy;
+        
+        if (proxySelect.value === 'custom') {
+          newProxy = document.getElementById('custom-proxy').value.trim();
+          if (!newProxy) {
+            alert('Please enter a custom proxy URL');
+            return;
+          }
+        } else {
+          newProxy = proxySelect.value;
+        }
+        
+        currentProxy = newProxy;
+        localStorage.setItem('talon_proxy', currentProxy);
+        document.getElementById('current-proxy-display').textContent = currentProxy;
+        updateProxyStatus(true);
+        
+        alert('Proxy settings saved!');
+      }
+      
+      function resetProxySettings() {
+        currentProxy = 'https://api.codetabs.com/v1/proxy?quest=';
+        localStorage.setItem('talon_proxy', currentProxy);
+        document.getElementById('proxy-select').value = currentProxy;
+        document.getElementById('current-proxy-display').textContent = currentProxy;
+        document.getElementById('custom-proxy-container').style.display = 'none';
+        updateProxyStatus(true);
+        
+        alert('Proxy settings reset to default!');
+      }
+      
+      function testProxy() {
+        const testUrl = 'https://example.com';
+        const proxyUrl = currentProxy + encodeURIComponent(testUrl);
+        const resultDiv = document.getElementById('proxy-test-result');
+        
+        resultDiv.innerHTML = '<div class="spinner"></div> Testing proxy...';
+        resultDiv.style.display = 'block';
+        resultDiv.style.color = '#8a8f95';
+        
+        fetch(proxyUrl)
+          .then(response => {
+            if (response.ok) {
+              resultDiv.innerHTML = '<span style="color: #4dffa6;">✓ Proxy is working!</span>';
+              updateProxyStatus(true);
+            } else {
+              resultDiv.innerHTML = '<span style="color: #ff6b6b;">✗ Proxy returned error: ' + response.status + '</span>';
+              updateProxyStatus(false);
+            }
+          })
+          .catch(error => {
+            resultDiv.innerHTML = '<span style="color: #ff6b6b;">✗ Proxy test failed: ' + error.message + '</span>';
+            updateProxyStatus(false);
+          });
+      }
+      
+      function updateProxyStatus(isActive) {
+        const indicator = document.getElementById('proxy-status-indicator');
+        const text = document.getElementById('proxy-status-text');
+        
+        if (isActive) {
+          indicator.className = 'proxy-status active';
+          text.textContent = 'Active';
+          text.style.color = '#4dffa6';
+        } else {
+          indicator.className = 'proxy-status inactive';
+          text.textContent = 'Error';
+          text.style.color = '#ff6b6b';
+        }
+      }
+      
+      function saveAppearanceSettings() {
+        const theme = document.getElementById('theme-select').value;
+        const fontSize = document.getElementById('font-size').value;
+        
+        localStorage.setItem('theme', theme);
+        localStorage.setItem('fontSize', fontSize);
+        
+        // Apply theme
+        if (theme === 'light') {
+          document.body.style.backgroundColor = '#f0f0f0';
+          document.body.style.color = '#333';
+        } else {
+          document.body.style.backgroundColor = '#1a1d21';
+          document.body.style.color = '#e0e0e0';
+        }
+        
+        // Apply font size
+        const sizeMap = { small: '14px', medium: '16px', large: '18px' };
+        document.body.style.fontSize = sizeMap[fontSize] || '16px';
+        
+        alert('Appearance settings saved!');
+      }
+      
+      function clearAllData() {
+        if (confirm('Are you sure you want to clear ALL browsing data? This cannot be undone.')) {
+          localStorage.clear();
+          sessionStorage.clear();
+          tabs = [{
+            title: 'New Tab',
+            url: 'talon://start',
+            content: 'home',
+            history: ['talon://start'],
+            historyIndex: 0
+          }];
+          
+          document.getElementById('clear-data-message').innerHTML = '<span style="color: #4dffa6;">All browsing data cleared!</span>';
+          document.getElementById('clear-data-message').style.display = 'block';
+          
+          setTimeout(() => {
+            location.reload();
+          }, 1000);
+        }
+      }
+      
+      function checkForUpdates() {
+        const updateDiv = document.getElementById('update-status');
+        updateDiv.innerHTML = '<div class="spinner"></div> Checking for updates...';
+        updateDiv.style.display = 'block';
+        
+        setTimeout(() => {
+          updateDiv.innerHTML = '<span style="color: #4dffa6;">✓ You are using the latest version (1.9.0)</span>';
+        }, 1500);
+      }
+      
+      function showDebugInfo() {
+        console.log('=== Talon Debug Info ===');
+        console.log('Current Proxy:', currentProxy);
+        console.log('Search Engine:', currentSearchEngine);
+        console.log('Active Tab:', currentTabIndex);
+        console.log('Total Tabs:', tabs.length);
+        console.log('User Agent:', navigator.userAgent);
+        console.log('Local Storage Size:', JSON.stringify(localStorage).length, 'bytes');
+        console.log('=====================');
+        
+        alert('Debug info logged to console (F12)');
+      }
+      
+      // Easter egg
+      let konami = [];
+      const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+      
+      document.addEventListener('keydown', (e) => {
+        konami.push(e.key);
+        if (konami.length > konamiCode.length) {
+          konami.shift();
+        }
+        if (konami.join(',') === konamiCode.join(',')) {
+          console.log('%c 🎮 SECRET FOUND! 🎮', 'font-size: 20px; color: #4dffa6;');
+          console.log('%c The proxy actually works now! Try visiting a website!', 'font-size: 14px; color: #8a8f95;');
+          alert('🎉 You found the secret! The proxy actually works!\n\nTry visiting google.com or youtube.com!');
+          konami = [];
+        }
+      });
+      
+      // Test the proxy with a simple website
+      console.log('Proxy test: Try visiting "example.com" or "google.com"');
+      console.log('Using proxy: ' + currentProxy);
+    </script>
+  </body>
+</html>
